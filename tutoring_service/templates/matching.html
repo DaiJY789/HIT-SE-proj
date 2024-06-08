@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>家教与学生匹配</h1>
+<ul>
+    {% for match in matches %}
+    <li>{{ match.name }} - {{ match.subject }} - {{ match.grade }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

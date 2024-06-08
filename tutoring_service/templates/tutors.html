@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>家教信息列表</h1>
+<ul>
+    {% for tutor in tutors %}
+    <li><a href="{{ url_for('tutor_detail', tutor_id=tutor.id) }}">{{ tutor.name }} - {{ tutor.subject }} - {{ tutor.grade }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

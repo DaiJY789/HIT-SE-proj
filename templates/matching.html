@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>匹配的家教信息</h1>
+<ul>
+    {% for match in matches %}
+    <li><a href="{{ url_for('tutor_detail', tutor_id=match.id) }}">{{ match.name }} - {{ match.subject }} - {{ match.grade }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

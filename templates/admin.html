@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>管理员登录</h1>
+<form method="POST">
+    <label for="password">密码：</label>
+    <input type="password" id="password" name="password" required><br>
+    <button type="submit">登录</button>
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ tutor.name }} 的详细信息</h1>
+<p>科目: {{ tutor.subject }}</p>
+<p>年级: {{ tutor.grade }}</p>
+<p>可用时间: {{ tutor.time }}</p>
+<p>收费标准（元/小时）: {{ tutor.rate }}</p>
+
+<h2>评价</h2>
+<ul>
+    {% for review in reviews %}
+    <li>{{ review.username }}: {{ review.review }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

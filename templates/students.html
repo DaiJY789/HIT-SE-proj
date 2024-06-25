@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>学生需求列表</h1>
+<ul>
+    {% for student in students %}
+    <li>{{ student.name }} - {{ student.subject }} - {{ student.grade }} - 期望时间: {{ student.time }} - 预算: {{ student.budget }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

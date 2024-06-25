@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>管理员面板</h1>
+
+<h2>用户列表</h2>
+<ul>
+    {% for user in users %}
+    <li>{{ user.username }} - {{ user.role }} <a href="{{ url_for('delete_entity', entity='user', id=user.id) }}">删除</a></li>
+    {% endfor %}
+</ul>
+
+<h2>家教信息</h2>
+<ul>
+    {% for tutor in tutors %}
+    <li>{{ tutor.name }} - {{ tutor.subject }} - {{ tutor.grade }} <a href="{{ url_for('delete_entity', entity='tutor', id=tutor.id) }}">删除</a></li>
+    {% endfor %}
+</ul>
+
+<h2>学生需求</h2>
+<ul>
+    {% for student in students %}
+    <li>{{ student.name }} - {{ student.subject }} - {{ student.grade }} <a href="{{ url_for('delete_entity', entity='student', id=student.id) }}">删除</a></li>
+    {% endfor %}
+</ul>
+
+<h2>评价</h2>
+<ul>
+    {% for review in reviews %}
+    <li>{{ review.username }}: {{ review.review }} <a href="{{ url_for('delete_entity', entity='review', id=review.id) }}">删除</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

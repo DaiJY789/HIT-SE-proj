@@ -10,9 +10,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 
-@app.before_first_request
+# @app.before_request 是 Flask 中的一个装饰器，用于注册一个在每次请求处理之前执行的函数
+@app.before_request
 def create_tables():
-    db.create_all()
+    if not hasattr(g, 'first_request'):  # 保证该函数只在第一次访问时执行
+        g.first_request = True
+        db.create_all()  # 创建所有在模型中定义的数据库表格
 
 
 @app.before_request
@@ -24,7 +27,7 @@ def before_request():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('new_home.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>家教服务系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('{{ url_for('static', filename='image.png') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        h2 {
+            color: #007BFF;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        h3 {
+            color: #007BFF;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        .logo {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+        .github-link {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1em;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .github-link img {
+            width: 20px;
+            margin-right: 8px; /* 图标与文字之间的间距 */
+        }
+        .github-link:hover {
+            text-decoration: underline;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* 按钮之间的间距 */
+        }
+        .buttons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 25px;
+            font-size: 1.1em;
+            text-decoration: none;
+            color: white;
+            background-color: #454141; /* 填充 */
+            border: 2px solid #454141; /* 边框 */
+            border-radius: 25px; /* 椭圆形按钮 */
+            height: 30px;
+            width: 150px;
+        }
+        .buttons a img {
+            width: 30px; /* 放大图标 */
+            height: 30px; /* 保持图标为正方形 */
+            margin-right: 10px; /* 图标与文字之间的间距 */
+        }
+        .buttons a:nth-child(1):hover {
+            background-color: #0056b3; /* 第一个按钮悬停时深蓝色 */
+        }
+        .buttons a:nth-child(2):hover {
+            background-color: #FF7C80; /* 第二个按钮悬停时浅红色 */
+        }
+        .buttons a:nth-child(3):hover {
+            background-color: #FDDC7F; /* 第三个按钮悬停时浅黄色 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>在线家教服务系统</h1>
+        <h3>By J. Peng, Q. Ren, J. Dai</h3>
+        <img src="{{ url_for('static', filename='figures/group.png') }}" alt="Logo" class="logo">
+        <div class="github-link">
+            <img src="{{ url_for('static', filename='figures/githubicon.png') }}" alt="GitHub Icon">
+            <a href="https://github.com/Dai-JY/HIT-SE-proj">Our Github</a>
+        </div>
+        <div class="buttons">
+            <a href="{{ url_for('login') }}">
+                <img src="{{ url_for('static', filename='figures/student.png') }}" alt="Student Icon">
+                学生登录
+            </a>
+            <a href="{{ url_for('login') }}">
+                <img src="{{ url_for('static', filename='figures/tutor.png') }}" alt="Tutor Icon">
+                家教登录
+            </a>
+            <a href="{{ url_for('admin') }}">
+                <img src="{{ url_for('static', filename='figures/admin.png') }}" alt="Admin Icon">
+                管理员登录
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

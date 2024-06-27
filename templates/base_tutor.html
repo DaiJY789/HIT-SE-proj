@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>{% block title %}家教服务系统{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            background-attachment: fixed; /* 背景在滚动时保持不变 */
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #007BFF;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0;
+        }
+        .sidebar a {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background-color: #0081D0; /* 浅蓝色 */
+            border: 2px solid white; /* 增加白色边界 */
+            text-align: center;
+        }
+        .sidebar a:hover {
+            background-color: #CCECFF; /* 浅蓝色 */
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            justify-content: center; /* 垂直居中 */
+            align-items: center;     /* 水平居中 */
+            border-radius: 10px;
+            margin: 20px;
+            overflow: auto; /* 确保内容区域可以滚动 */
+        }
+        .center-text {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="{{ url_for('tutor_profile', user_id=g.user.id) }}">个人中心</a>
+        <a href="{{ url_for('tutor_form')}}">发布家教信息</a>
+        <a href="{{ url_for('tutors')}}">查看家教信息</a>
+        <a href="{{ url_for('students')}}">查看学生需求</a>
+        <a href="#">查看系统推荐</a>
+        <a href="{{ url_for('home', ) }}">回到首页</a>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

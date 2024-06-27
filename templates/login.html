@@ -1,11 +1,122 @@
-{% extends "base.html" %}
 {% block content %}
-<h1>登录</h1>
-<form method="POST">
-    <label for="username">用户名：</label>
-    <input type="text" id="username" name="username" required><br>
-    <label for="password">密码：</label>
-    <input type="password" id="password" name="password" required><br>
-    <button type="submit">登录</button>
-</form>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: url('{{ url_for('static', filename='./figures/admin_bk.png') }}') no-repeat center center fixed;
+        background-size: cover;
+    }
+    .container {
+        display: flex;
+        justify-content: flex-end; /* 将内容推向右边 */
+        width: 100%;
+        padding: 20px;
+    }
+    .content {
+        width: 50%;
+        max-width: 800px;
+        text-align: center;
+        background: white;
+        padding: 40px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.8); /* 设置为半透明的白色 */
+    }
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 30px;
+        border: 1px solid #ccc;
+        border-radius: 50px; /* 圆角矩形 */
+        font-size: 1em;
+        box-sizing: border-box; /* 包括填充在内计算宽度 */
+    }
+    input[type="text"]::placeholder, input[type="password"]::placeholder {
+        color: #888; /* 灰色提示词 */
+    }
+    button {
+        width: 100%; /* 与输入框一样宽 */
+        padding: 15px;
+        font-size: 1em;
+        text-decoration: none;
+        color: white;
+        background-color: #007BFF;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .register-link {
+        margin-top: 20px;
+        font-size: 1em;
+        color: #007BFF;
+    }
+    .register-link a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+    .image-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .image-container img {
+        max-width: 50%;
+        height: auto;
+    }
+    .image-container p {
+        color: #888; /* 灰色小字 */
+        font-size: 1em;
+    }
+    .error {
+        color: red;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="container">
+<div class="content">
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='./figures/tutor.png') }}" alt="Tutor Image">
+        <p>HIT在线家教服务平台</p>
+        <p>致力于帮助您获取优质生源</p>
+    </div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+        <input type="text" id="username" name="username" placeholder="请输入家教用户名" required><br>
+        <input type="password" id="password" name="password" placeholder="请输入密码" required><br>
+        <button type="submit">开始你的家教之旅吧！</button>
+    </form>
+    <p class="register-link"><a href="{{ url_for('register') }}">还没有账号？注册一个吧!</a></p>
+</div>
+</div>
 {% endblock %}
+
+
+
+

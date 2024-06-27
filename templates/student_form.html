@@ -1,17 +1,76 @@
-{% extends "base.html" %}
+{% extends "base_student.html" %}
 {% block content %}
-<h1>发布学生需求</h1>
-<form method="POST">
-    <label for="name">姓名：</label>
-    <input type="text" id="name" name="name" required><br>
-    <label for="subject">科目：</label>
-    <input type="text" id="subject" name="subject" required><br>
-    <label for="grade">年级：</label>
-    <input type="text" id="grade" name="grade" required><br>
-    <label for="time">期望时间：</label>
-    <input type="text" id="time" name="time" required><br>
-    <label for="budget">预算（元/小时）：</label>
-    <input type="text" id="budget" name="budget" required><br>
-    <button type="submit">提交</button>
-</form>
+    <h1 class="center-text">请填写您想要发布的需求</h1>
+    <form method="POST" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+            <div class="invalid-feedback">请输入姓名。</div>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">科目：</label>
+            <select id="subject" name="subject" class="form-control" required>
+                <option value="">请选择科目</option>
+                <option value="语文">语文</option>
+                <option value="数学">数学</option>
+                <option value="英语">英语</option>
+                <option value="物理">物理</option>
+                <option value="化学">化学</option>
+                <option value="生物">生物</option>
+                <option value="历史">历史</option>
+                <option value="地理">地理</option>
+                <option value="政治">政治</option>
+                <option value="其他">其他</option>
+            </select>
+            <div class="invalid-feedback">请选择科目。</div>
+        </div>
+
+        <div class="form-group">
+            <label for="grade">年级：</label>
+            <select id="grade" name="grade" class="form-control" required>
+                <option value="">请选择年级</option>
+                <option value="小学">小学</option>
+                <option value="初中">初中</option>
+                <option value="高中">高中</option>
+                <option value="大学">大学</option>
+                <option value="其他">其他</option>
+            </select>
+            <div class="invalid-feedback">请选择年级。</div>
+        </div>
+
+        <div class="form-group">
+            <label for="time">期望时间：</label>
+            <input type="text" id="time" name="time" class="form-control" required>
+            <div class="invalid-feedback">请输入期望时间。</div>
+        </div>
+
+        <div class="form-group">
+            <label for="budget">预算（元/小时）：</label>
+            <input type="text" id="budget" name="budget" class="form-control" required>
+            <div class="invalid-feedback">请输入预算。</div>
+        </div>
+        <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+    </form>
+
+<script>
+    // 在提交表单时进行验证
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 {% endblock %}

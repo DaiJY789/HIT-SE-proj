@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>家教服务系统</title>
 </head>
 <body>
     <nav>
         <a href="{{ url_for('home') }}">首页</a>
-        <a href="{{ url_for('register') }}">注册</a>
-        <a href="{{ url_for('login') }}">登录</a>
         <a href="{{ url_for('tutor_form') }}">发布家教信息</a>
         <a href="{{ url_for('student_form') }}">发布学生需求</a>
         <a href="{{ url_for('tutors') }}">家教信息</a>

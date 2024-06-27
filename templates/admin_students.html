@@ -1,0 +1,24 @@
+{% extends "base_admin.html" %}
+{% block content %}
+<style>
+    .error {
+        color: red;
+        margin-bottom: 20px;
+    }
+</style>
+
+{% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="error">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+<h2>学生需求</h2>
+<ul>
+    {% for student in students %}
+    <li>{{ student.name }} - {{ student.subject }} - {{ student.grade }} <a href="{{ url_for('delete_entity', entity='student', id=student.id) }}">删除</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

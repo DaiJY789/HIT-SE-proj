@@ -1,9 +1,34 @@
-{% extends "base.html" %}
+{% if user.role == 'tutor' %}
+    {% extends "base_tutor.html" %}
+{% else %}
+    {% extends "base_student.html" %}
+{% endif %}
 {% block content %}
-<h1>学生需求列表</h1>
-<ul>
-    {% for student in students %}
-    <li>{{ student.name }} - {{ student.subject }} - {{ student.grade }} - 期望时间: {{ student.time }} - 预算: {{ student.budget }}</li>
-    {% endfor %}
-</ul>
+<style>
+    .card {
+        background-color: #CCECFF; /* 浅蓝色填充 */
+        border: 3px solid #007BFF; /* 深蓝色边框 */
+        border-radius: 10px; /* 可选：添加圆角 */
+    }
+</style>
+<div class="container mt-4">
+    <h1 class="mb-4" style="text-align: center;">学生需求列表</h1>
+    <div class="row">
+        {% for student in students %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{ student.name }}同学</h5>
+                    <p class="card-text" style="text-align: center;"><strong>学科: </strong> {{ student.subject }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>年级: </strong>{{ student.grade }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>期望时间: </strong>{{ student.time }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>预算:</strong> {{ student.budget }}元/小时</p>
+                    <p class="card-text" style="text-align: center;"><strong>联系方式: </strong>{{ student.phoneNumber }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
+

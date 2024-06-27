@@ -1,11 +1,41 @@
-{% extends "base.html" %}
+{% extends "base_student.html" %}
 {% block content %}
-<h1>提交评价</h1>
-<form method="POST">
-    <label for="tutor_name">家教姓名：</label>
-    <input type="text" id="tutor_name" name="tutor_name" required><br>
-    <label for="review">评价内容：</label>
-    <textarea id="review" name="review" required></textarea><br>
-    <button type="submit">提交</button>
-</form>
+    <h1 class="center-text">提交评价</h1>
+    <form method="POST" class="needs-validation" novalidate style="margin-top: 20px;">
+        <div class="form-group">
+            <label for="tutor_name">家教姓名：</label>
+            <input type="text" id="tutor_name" name="tutor_name" class="form-control" placeholder="请输入您要评价的家教姓名" required>
+            <div class="invalid-feedback">请输入您要评价的家教姓名。</div>
+        </div>
+
+        <div class="form-group">
+            <label for="review">评价内容：</label>
+            <textarea id="review" name="review" class="form-control" style="height: 200px;" placeholder="请输入您的评价内容" required></textarea>
+            <div class="invalid-feedback">请输入您的评价内容。</div>
+        </div>
+
+        <div style="text-align: center;">
+            <button type="submit" class="btn btn-primary">提交</button>
+        </div>
+    </form>
+
+    <script>
+        // 在提交表单时进行验证
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
 {% endblock %}
+

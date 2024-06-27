@@ -1,16 +1,122 @@
-{% extends "base.html" %}
 {% block content %}
-<h1>注册</h1>
-<form method="POST">
-    <label for="username">用户名：</label>
-    <input type="text" id="username" name="username" required><br>
-    <label for="password">密码：</label>
-    <input type="password" id="password" name="password" required><br>
-    <label for="role">角色：</label>
-    <select id="role" name="role">
-        <option value="tutor">家教</option>
-        <option value="student">学生</option>
-    </select><br>
-    <button type="submit">注册</button>
-</form>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: url('{{ url_for('static', filename='./figures/admin_bk.png') }}') no-repeat center center fixed;
+        background-size: cover;
+    }
+    .container {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 20px;
+    }
+    .content {
+        width: 50%;
+        max-width: 800px;
+        text-align: center;
+        background: white;
+        padding: 40px;
+        border-radius: 50px;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    input[type="text"], input[type="password"], select {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 30px;
+        border: 1px solid #ccc;
+        border-radius: 50px;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+    input[type="text"]::placeholder, input[type="password"]::placeholder {
+        color: #888;
+    }
+    button {
+        width: 100%;
+        padding: 15px;
+        font-size: 1em;
+        text-decoration: none;
+        color: white;
+        background-color: #007BFF;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .register-link {
+        margin-top: 20px;
+        font-size: 1em;
+        color: #007BFF;
+    }
+    .register-link a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+    .image-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .image-container img {
+        max-width: 50%;
+        height: auto;
+    }
+    .image-container p {
+        color: #888;
+        font-size: 1em;
+    }
+    .error {
+        color: red;
+        margin-bottom: 20px;
+    }
+</style>
+<div class="container">
+    <div class="content">
+        <h1>用户注册</h1>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="error">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="POST">
+            <input type="text" id="username" name="username" placeholder="请设置您的用户名" required><br>
+            <input type="password" id="password" name="password" placeholder="请设置您的密码" required><br>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="请再次输入密码" required><br>
+            <input type="text" id="phoneNumber" name="phoneNumber" placeholder="请输入您的手机号" required><br>
+            <label for="role">请选择您要注册的用户类型：</label>
+            <select id="role" name="role">
+                <option value="tutor">家教</option>
+                <option value="student">学生</option>
+            </select><br>
+            <button type="submit">开始您的在线家教平台之旅</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
+
+

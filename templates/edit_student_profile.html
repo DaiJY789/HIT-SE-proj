@@ -1,0 +1,42 @@
+{% extends "base_student.html" %}
+{% block content %}
+<style>
+    .edit-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .edit-form input[type="text"], .edit-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .edit-form button {
+        padding: 10px 20px;
+        color: white;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .edit-form button:hover {
+        background-color: #0056b3;
+    }
+</style>
+<div class="edit-form">
+    <h1>编辑个人信息</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="username" placeholder="用户名" value="{{ user.username }}" required>
+        <input type="text" name="phoneNumber" placeholder="电话号码" value="{{ user.phoneNumber }}">
+        <input type="text" name="location" placeholder="省/市/区/街道号" value="{{ user.location }}">
+        <input type="file" name="photo">
+        <button type="submit">保存</button>
+    </form>
+</div>
+{% endblock %}

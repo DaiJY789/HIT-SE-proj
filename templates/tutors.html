@@ -1,9 +1,36 @@
-{% extends "base.html" %}
+{% if user.role == 'tutor' %}
+    {% extends "base_tutor.html" %}
+{% else %}
+    {% extends "base_student.html" %}
+{% endif %}
 {% block content %}
-<h1>家教信息列表</h1>
-<ul>
-    {% for tutor in tutors %}
-    <li><a href="{{ url_for('tutor_detail', tutor_id=tutor.id) }}">{{ tutor.name }} - {{ tutor.subject }} - {{ tutor.grade }}</a></li>
-    {% endfor %}
-</ul>
+<style>
+    .card {
+        background-color: #CCECFF; /* 浅蓝色填充 */
+        border: 3px solid #007BFF; /* 深蓝色边框 */
+        border-radius: 20px; /* 可选：添加圆角 */
+    }
+</style>
+<div class="container mt-4">
+    <h1 class="mb-4" style="text-align: center;">家教信息列表</h1>
+    <div class="row">
+        {% for tutor in tutors %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{ tutor.name }}老师</h5>
+                    <p class="card-text" style="text-align: center;">家教学科：{{ tutor.subject }}</p>
+                    <p class="card-text" style="text-align: center;">家教年级：{{ tutor.grade }}</p>
+                    <p class="card-text" style="text-align: center;">可以进行家教的时间：{{ tutor.time }}</p>
+                    <p class="card-text" style="text-align: center;">收费标准：{{ tutor.rate }}元/小时</p>
+                    <p class="card-text" style="text-align: center;">联系方式：{{ tutor.phoneNumber }}</p>
+                    <div class="text-center">
+                        <a href="{{ url_for('tutor_profile', user_id=tutor.user_id) }}" class="btn btn-primary">查看家教个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

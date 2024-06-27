@@ -96,9 +96,9 @@
 <div class="container">
 <div class="content">
     <div class="image-container">
-        <img src="{{ url_for('static', filename='./figures/admin.png') }}" alt="Tutor Image">
+        <img src="{{ url_for('static', filename='./figures/tutor.png') }}" alt="Tutor Image">
         <p>HIT在线家教服务平台</p>
-        <p>致力于帮助您管理家教信息</p>
+        <p>致力于帮助您获取优质生源</p>
     </div>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -108,9 +108,11 @@
       {% endif %}
     {% endwith %}
     <form method="POST">
-        <input type="password" id="password" name="password" placeholder="请输入管理员密码" required><br>
-        <button type="submit">登录</button>
+        <input type="text" id="username" name="username" placeholder="请输入家教用户名" required><br>
+        <input type="password" id="password" name="password" placeholder="请输入密码" required><br>
+        <button type="submit">开始你的家教之旅吧！</button>
     </form>
+    <p class="register-link"><a href="{{ url_for('register') }}">还没有账号？注册一个</a></p>
 </div>
 </div>
 {% endblock %}

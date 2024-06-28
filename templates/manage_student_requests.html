@@ -1,0 +1,23 @@
+{% extends "base_student.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>管理您发布的家教需求</h1>
+    {% if student_requests %}
+        <ul class="list-group">
+            {% for request in student_requests %}
+                <li class="list-group-item">
+                    <h5>{{ request.subject }} - {{ request.grade }}</h5>
+                    <p>时间：{{ request.time }}</p>
+                    <p>预算：{{ request.budget }}元/小时</p>
+                    <p>说明：{{ request.information }}</p>
+                    <form action="{{ url_for('delete_student_request', request_id=request.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('确定要删除此需求吗？');">删除</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>您还没有发布任何家教需求。</p>
+    {% endif %}
+</div>
+{% endblock %}

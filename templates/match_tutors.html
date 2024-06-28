@@ -31,7 +31,7 @@
 
 <div class="loading-overlay" id="loading-overlay">
     <img src="{{ url_for('static', filename='figures/time.png') }}" alt="Loading">
-    <div class="loading-text">推荐生成中...</div>
+    <div class="loading-text">系统正在为您匹配家教中...请稍等...</div>
 </div>
 
 <div class="container mt-4" id="content" style="display: none;">
@@ -49,7 +49,7 @@
                     <p class="card-text" style="text-align: center;">收费标准：{{ item.tutor.rate }}元/小时</p>
                     <p class="card-text" style="text-align: center;">联系方式：{{ item.tutor.phoneNumber }}</p>
                     <p class="card-text" style="text-align: center;">说明：{{ item.tutor.information }}</p>
-                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 米</p>
+                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 公里</p>
                     <div class="text-center">
                         <a href="{{ url_for('tutor_profile', user_id=item.tutor.user_id) }}" class="btn btn-primary">查看家教个人信息</a>
                     </div>

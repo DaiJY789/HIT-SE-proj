@@ -67,6 +67,9 @@
                     <p class="card-text" style="text-align: center;"><strong>预算:</strong> {{ student.budget }}元/小时</p>
                     <p class="card-text" style="text-align: center;"><strong>联系方式: </strong>{{ student.phoneNumber }}</p>
                     <p class="card-text" style="text-align: center;"><strong>说明: </strong>{{ student.information }}</p>
+                    <div class="text-center">
+                        <a href="{{ url_for('student_profile', user_id=student.user_id) }}" class="btn btn-primary">查看学生个人信息</a>
+                    </div>
                 </div>
             </div>
         </div>

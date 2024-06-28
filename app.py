@@ -212,7 +212,43 @@ def tutor_form():
         return redirect(url_for('tutors'))
     return render_template('tutor_form.html')
 # -------------------------3查看家教信息-------------------------
+
+
 # -----------------------4管理我的家教信息------------------------
+
+@app.route('/manage_tutor_info')
+def manage_tutor_info():
+    tutor_infos = TutorInfo.query.filter_by(user_id=g.user.id).all()
+    return render_template('manage_tutor_info.html', tutor_infos=tutor_infos)
+
+
+@app.route('/delete_tutor_info/<int:tutor_info_id>', methods=['POST'])
+def delete_tutor_info(tutor_info_id):
+    tutor_info = TutorInfo.query.get_or_404(tutor_info_id)
+    if tutor_info.user_id != g.user.id:
+        flash('您没有权限删除此信息')
+        return redirect(url_for('manage_tutor_info'))
+    db.session.delete(tutor_info)
+    db.session.commit()
+    return redirect(url_for('manage_tutor_info'))
+
+
+@app.route('/manage_student_requests')
+def manage_student_requests():
+    student_requests = StudentRequest.query.filter_by(user_id=g.user.id).all()
+    return render_template('manage_student_requests.html', student_requests=student_requests)
+
+@app.route('/delete_student_request/<int:request_id>', methods=['POST'])
+def delete_student_request(request_id):
+    request = StudentRequest.query.get_or_404(request_id)
+    if request.user_id != g.user.id:
+        flash('您没有权限删除此需求。', 'danger')
+        return redirect(url_for('manage_student_requests'))
+    db.session.delete(request)
+    db.session.commit()
+    flash('家教需求已删除。', 'success')
+    return redirect(url_for('manage_student_requests'))
+
 # -------------------------5查看学生需求-------------------------
 # -------------------------6查看系统推荐-------------------------
 # -------------------------7查看我的评价-------------------------
@@ -382,6 +418,8 @@ def match_tutors():
         return redirect(url_for('login'))
 
     student_requests = StudentRequest.query.filter_by(user_id=g.user.id).all()
+    if not student_requests:
+        return "未找到您的需求信息，请先填写您的需求。"
     matched_tutors = []
 
     for student_request in student_requests:
@@ -393,7 +431,7 @@ def match_tutors():
         for tutor in tutors:
             tutor_user = User.query.get(tutor.user_id)
             tutor_location = tutor_user.location
-            distance = cal_distance(tutor_location, student_location)
+            distance = float(cal_distance(tutor_location, student_location))/1000
 
             tutor_info = {
                 'tutor': tutor,
@@ -426,7 +464,7 @@ def match_students():
     for student_request in student_requests:
         student = User.query.get(student_request.user_id)
         student_location = student.location
-        distance = cal_distance(tutor_location, student_location)
+        distance = float(cal_distance(tutor_location, student_location))/1000
 
         student_info = {
             'student_request': student_request,
@@ -456,10 +494,6 @@ def admin():
 def admin_home():
     if 'admin' not in session:
         return redirect(url_for('admin'))
-    # users = User.query.all()
-    # tutors = TutorInfo.query.all()
-    # students = StudentRequest.query.all()
-    # reviews = Review.query.all()
     return render_template('admin_home.html')
 
 

@@ -59,6 +59,7 @@
     <div class="sidebar">
         <a href="{{ url_for('student_profile', user_id=g.user.id) }}">个人中心</a>
         <a href="{{ url_for('student_form')}}">发布您的需求</a>
+        <a href="{{ url_for('manage_student_requests')}}">管理您的需求</a>
         <a href="{{ url_for('students')}}">查看学生需求</a>
         <a href="{{ url_for('tutors')}}">查看家教信息</a>
         <a href="{{ url_for('match_tutors')}}">查看系统推荐</a>

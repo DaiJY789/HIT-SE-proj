@@ -40,11 +40,12 @@
         margin-bottom: 40px; /* 增加表单元素之间的垂直距离 */
     }
 </style>
+
 <div class="container mt-5">
     <h1 class="center-text">请填写您想要发布的家教信息</h1>
     <form method="POST" class="needs-validation" novalidate>
 
-                <div class="form-group">
+        <div class="form-group">
             <label for="grade">年级：</label>
             <select id="grade" name="grade" class="form-control" required>
                 <option value="">请选择年级</option>
@@ -93,24 +94,23 @@
         <input type="hidden" id="selected-subject" name="subject" required>
         <div class="invalid-feedback">请选择科目。</div>
 
-
-
         <div class="form-group">
             <label for="time">可用时间：</label>
-            <input type="text" id="time" name="time" class="form-control" required>
-            <div class="invalid-feedback">请输入可用时间。</div>
+            <input type="text" id="time" name="time" class="form-control" pattern="^周[一二三四五六日]$" required>
+            <div class="invalid-feedback">请输入正确的可用时间格式，例如：周一。</div>
         </div>
 
         <div class="form-group">
             <label for="rate">收费标准（元/小时）：</label>
-            <input type="number" id="rate" name="rate" class="form-control" required min="0" step="0.01">
-            <div class="invalid-feedback">请输入收费标准。</div>
+            <input type="text" id="rate" name="rate" class="form-control" required>
+            <div class="invalid-feedback">请输入大于0的收费标准。</div>
         </div>
+
         <div class="form-group">
             <label for="information">补充说明：</label>
-            <textarea id="information" name="information" class="form-control" style="height: 200px;" placeholder="补充说明（非必填）" required></textarea>
-            <div class="invalid-feedback">请输入您的评价内容。</div>
+            <textarea id="information" name="information" class="form-control" style="height: 200px;" placeholder="补充说明（非必填）"></textarea>
         </div>
+
         <div style="text-align: center;">
             <button type="submit" class="btn btn-primary">提交</button>
         </div>
@@ -121,7 +121,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const buttons = document.querySelectorAll('.subject-button');
         const hiddenInput = document.getElementById('selected-subject');
-        const invalidFeedback = document.querySelector('.invalid-feedback');
+        const invalidFeedback = document.querySelectorAll('.invalid-feedback');
 
         buttons.forEach(button => {
             button.addEventListener('click', function() {
@@ -129,19 +129,30 @@
                 this.classList.add('selected');
                 hiddenInput.value = this.getAttribute('data-value');
                 hiddenInput.setCustomValidity('');
-                invalidFeedback.style.display = 'none';
+                invalidFeedback[1].style.display = 'none';
             });
         });
 
-        // 在提交表单时进行验证
         const form = document.querySelector('.needs-validation');
         form.addEventListener('submit', function(event) {
             if (hiddenInput.value === '') {
                 event.preventDefault();
                 event.stopPropagation();
                 hiddenInput.setCustomValidity('请选择科目');
-                invalidFeedback.style.display = 'block';
+                invalidFeedback[1].style.display = 'block';
             }
+
+            const rate = document.getElementById('rate');
+            if (isNaN(rate.value) || parseInt(rate.value) <= 0) {
+                event.preventDefault();
+                event.stopPropagation();
+                rate.setCustomValidity('请输入大于0的收费标准');
+                invalidFeedback[3].style.display = 'block';
+            } else {
+                rate.setCustomValidity('');
+                invalidFeedback[3].style.display = 'none';
+            }
+
             form.classList.add('was-validated');
         });
     });

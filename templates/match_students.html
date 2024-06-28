@@ -49,7 +49,7 @@
                     <p class="card-text" style="text-align: center;">预算：{{ item.student_request.budget }}元/小时</p>
                     <p class="card-text" style="text-align: center;">联系方式：{{ item.student_request.phoneNumber }}</p>
                     <p class="card-text" style="text-align: center;">说明：{{ item.student_request.information }}</p>
-                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 米</p>
+                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 公里</p>
                     <div class="text-center">
                         <a href="{{ url_for('student_profile', user_id=item.student_request.user_id) }}" class="btn btn-primary">查看学生个人信息</a>
                     </div>

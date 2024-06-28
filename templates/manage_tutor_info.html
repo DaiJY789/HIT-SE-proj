@@ -1,0 +1,23 @@
+{% extends "base_tutor.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>管理您发布的家教信息</h1>
+    {% if tutor_infos %}
+        <ul class="list-group">
+            {% for tutor_info in tutor_infos %}
+                <li class="list-group-item">
+                    <h5>{{ tutor_info.subject }} - {{ tutor_info.grade }}</h5>
+                    <p>时间：{{ tutor_info.time }}</p>
+                    <p>收费标准：{{ tutor_info.rate }}元/小时</p>
+                    <p>说明：{{ tutor_info.information }}</p>
+                    <form action="{{ url_for('delete_tutor_info', tutor_info_id=tutor_info.id) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('确定要删除此信息吗？');">删除</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>您还没有发布任何家教信息。</p>
+    {% endif %}
+</div>
+{% endblock %}

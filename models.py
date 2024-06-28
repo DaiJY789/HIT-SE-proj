@@ -7,7 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
-    role = db.Column(db.String(20), nullable=False)
+    role = db.Column(db.String(20), nullable=False) # role=tutor是老师，=student是学生
     phoneNumber = db.Column(db.String(20), unique=False, nullable=True)
     location = db.Column(db.String(80), unique=False, nullable=True)
     photo = db.Column(db.String(120), nullable=True)  # 假设存储照片的路径或URL

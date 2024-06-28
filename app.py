@@ -1,3 +1,5 @@
+import requests
+import json
 import os
 from PIL import Image
 
@@ -278,35 +280,171 @@ def student_form():
 
 
 # ---------------------------------------------------查看家教信息-----------------------------------------------
-
 @app.route('/tutors')
 def tutors():
-    tutor_infos = TutorInfo.query.all()
+    subject = request.args.get('subject')
+    grade = request.args.get('grade')
+    rate = request.args.get('rate')
+
+    query = TutorInfo.query
+
+    if subject:
+        query = query.filter(TutorInfo.subject == subject)
+
+    if grade:
+        query = query.filter(TutorInfo.grade == grade)
+
+    if rate:
+        min_rate, max_rate = 0, float('inf')
+        if '-' in rate:
+            min_rate, max_rate = map(int, rate.split('-'))
+        elif '以上' in rate:
+            min_rate = int(rate.replace('以上', ''))
+        query = query.filter(
+            db.cast(TutorInfo.rate, db.Float) >= min_rate,
+            db.cast(TutorInfo.rate, db.Float) <= max_rate
+        )
+
+    tutor_infos = query.all()
+
     return render_template('tutors.html', tutors=tutor_infos, user=g.user)
 
 
-# ---------------------------------------------------查看学生需求-----------------------------------------------
 
+# ---------------------------------------------------查看学生需求-----------------------------------------------
 @app.route('/students')
 def students():
-    student_requests = StudentRequest.query.all()
+    subject = request.args.get('subject')
+    grade = request.args.get('grade')
+    budget = request.args.get('budget')
+
+    query = StudentRequest.query
+
+    if subject:
+        query = query.filter(StudentRequest.subject == subject)
+
+    if grade:
+        query = query.filter(StudentRequest.grade == grade)
+
+    if budget:
+        min_budget, max_budget = 0, float('inf')
+        if '-' in budget:
+            min_budget, max_budget = map(int, budget.split('-'))
+        elif '以上' in budget:
+            min_budget = int(budget.replace('以上', ''))
+        query = query.filter(
+            db.cast(StudentRequest.budget, db.Float) >= min_budget,
+            db.cast(StudentRequest.budget, db.Float) <= max_budget
+        )
+
+    student_requests = query.all()
+
     return render_template('students.html', students=student_requests, user=g.user)
+
+
+
 
 
 # ---------------------------------------------------查看家教信息-----------------------------------------------
 
 
+# ---------------------------------------------------系统推荐-----------------------------------------------
 
-@app.route('/matching')
-def matching():
+AK = "4dea2c674b5b93b130d77688ed01bee6"
+
+
+def get_location(address):
+    url = f"https://restapi.amap.com/v3/geocode/geo?address={address}&output=json&key={AK}"
+    res = requests.get(url)
+    json_data = json.loads(res.text)
+
+    if json_data["status"] == "1":
+        lnglat = json_data["geocodes"][0]["location"]
+    else:
+        return "no data", json_data["status"]
+    return lnglat, json_data["status"]
+
+
+def get_distance(start, end):
+    url = f"https://restapi.amap.com/v3/direction/driving?origin={start}&destination={end}&output=json&key={AK}"
+    res = requests.get(url)
+    json_data = json.loads(res.text)
+
+    if json_data["status"] == "1":
+        return json_data["route"]["paths"][0]["distance"]
+    else:
+        return -1
+
+
+def cal_distance(start_addr, end_addr):
+    start, status1 = get_location(start_addr)
+    end, status2 = get_location(end_addr)
+
+    if status1 == "1" and status2 == "1":
+        return get_distance(start, end)
+    else:
+        return -1
+
+
+@app.route('/match_tutors')
+def match_tutors():
     if not g.user:
         return redirect(url_for('login'))
+
     student_requests = StudentRequest.query.filter_by(user_id=g.user.id).all()
     matched_tutors = []
+
     for student_request in student_requests:
         tutors = TutorInfo.query.filter_by(subject=student_request.subject, grade=student_request.grade).all()
-        matched_tutors.extend(tutors)
-    return render_template('matching.html', matches=matched_tutors)
+
+        student = User.query.get(student_request.user_id)
+        student_location = student.location
+
+        for tutor in tutors:
+            tutor_user = User.query.get(tutor.user_id)
+            tutor_location = tutor_user.location
+            distance = cal_distance(student_location, tutor_location)
+
+            tutor_info = {
+                'tutor': tutor,
+                'distance': distance
+            }
+            matched_tutors.append(tutor_info)
+
+    return render_template('match_tutors.html', matched_tutors=matched_tutors)
+
+
+@app.route('/match_students')
+def match_students():
+    if not g.user:
+        return redirect(url_for('login'))
+
+    # 确保用户是家教
+    if g.user.role != 'tutor':
+        return redirect(url_for('home'))
+
+    tutor_info = TutorInfo.query.filter_by(user_id=g.user.id).first()
+    if not tutor_info:
+        return "未找到您的家教信息，请先填写家教信息。"
+
+    matched_students = []
+    student_requests = StudentRequest.query.filter_by(subject=tutor_info.subject, grade=tutor_info.grade).all()
+
+    tutor = User.query.get(g.user.id)
+    tutor_location = tutor.location
+
+    for student_request in student_requests:
+        student = User.query.get(student_request.user_id)
+        student_location = student.location
+        distance = cal_distance(tutor_location, student_location)
+
+        student_info = {
+            'student_request': student_request,
+            'distance': distance
+        }
+        matched_students.append(student_info)
+
+    return render_template('match_students.html', matched_students=matched_students)
 
 
 # ----------------------------------------------------管理员操作-------------------------------------------

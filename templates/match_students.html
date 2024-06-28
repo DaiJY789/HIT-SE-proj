@@ -1,0 +1,73 @@
+{% extends "base_tutor.html" %}
+{% block content %}
+<style>
+    .loading-overlay {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 9999;
+        transition: opacity 0.5s;
+        flex-direction: column;
+    }
+
+    .loading-text {
+        font-size: 24px;
+        color: #007BFF;
+        margin-top: 20px;
+    }
+
+    .card {
+        background-color: #CCECFF; /* 浅蓝色填充 */
+        border: 3px solid #007BFF; /* 深蓝色边框 */
+        border-radius: 20px; /* 可选：添加圆角 */
+    }
+</style>
+
+<div class="loading-overlay" id="loading-overlay">
+    <img src="{{ url_for('static', filename='figures/time.png') }}" alt="Loading">
+    <div class="loading-text">系统正在为您匹配学生中...请稍等...</div>
+</div>
+
+<div class="container mt-4" id="content" style="display: none;">
+    <h1 class="mb-4" style="text-align: center;">系统为您推荐的学生信息列表</h1>
+    <p style="text-align: center;">此列表根据您发布的家教信息和地理位置生成：</p>
+    <div class="row">
+        {% for item in matched_students %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{ item.student_request.name }}学生</h5>
+                    <p class="card-text" style="text-align: center;">所需家教学科：{{ item.student_request.subject }}</p>
+                    <p class="card-text" style="text-align: center;">所需家教年级：{{ item.student_request.grade }}</p>
+                    <p class="card-text" style="text-align: center;">家教时间需求：{{ item.student_request.time }}</p>
+                    <p class="card-text" style="text-align: center;">预算：{{ item.student_request.budget }}元/小时</p>
+                    <p class="card-text" style="text-align: center;">联系方式：{{ item.student_request.phoneNumber }}</p>
+                    <p class="card-text" style="text-align: center;">说明：{{ item.student_request.information }}</p>
+                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 米</p>
+                    <div class="text-center">
+                        <a href="{{ url_for('student_profile', user_id=item.student_request.user_id) }}" class="btn btn-primary">查看学生个人信息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        setTimeout(function() {
+            document.getElementById('loading-overlay').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+        }, 1000);
+    }
+</script>
+{% endblock %}
+
+

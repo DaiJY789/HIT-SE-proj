@@ -10,9 +10,51 @@
         border: 3px solid #007BFF; /* 深蓝色边框 */
         border-radius: 10px; /* 可选：添加圆角 */
     }
+    .form-group {
+        margin-bottom: 20px; /* 增加表单元素之间的垂直距离 */
+    }
 </style>
 <div class="container mt-4">
     <h1 class="mb-4" style="text-align: center;">学生需求列表</h1>
+    <form method="GET" action="{{ url_for('students') }}" class="mb-4">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="subject">学科</label>
+                <select id="subject" name="subject" class="form-control">
+                    <option value="">所有学科</option>
+                    <option value="语文">语文</option>
+                    <option value="数学">数学</option>
+                    <option value="英语">英语</option>
+                    <option value="物理">物理</option>
+                    <option value="化学">化学</option>
+                    <option value="生物">生物</option>
+                    <option value="历史">历史</option>
+                    <option value="地理">地理</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="grade">年级</label>
+                <select id="grade" name="grade" class="form-control">
+                    <option value="">所有年级</option>
+                    <option value="小学">小学</option>
+                    <option value="初中">初中</option>
+                    <option value="高中">高中</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="budget">预算（元/小时）</label>
+                <select id="budget" name="budget" class="form-control">
+                    <option value="">所有预算</option>
+                    <option value="0-50">0-50</option>
+                    <option value="51-100">51-100</option>
+                    <option value="101-150">101-150</option>
+                    <option value="151-200">151-200</option>
+                    <option value="200以上">200以上</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">搜索</button>
+    </form>
     <div class="row">
         {% for student in students %}
         <div class="col-md-4 mb-4">
@@ -32,4 +74,5 @@
     </div>
 </div>
 {% endblock %}
+
 

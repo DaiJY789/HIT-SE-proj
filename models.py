@@ -23,6 +23,8 @@ class TutorInfo(db.Model):
     time = db.Column(db.String(80), nullable=False)
     rate = db.Column(db.String(80), nullable=False)
     phoneNumber = db.Column(db.String(20), unique=False, nullable=False)
+    information = db.Column(db.Text, unique=False, nullable=False)
+
 
 class StudentRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +35,7 @@ class StudentRequest(db.Model):
     time = db.Column(db.String(80), nullable=False)
     budget = db.Column(db.String(80), nullable=False)
     phoneNumber = db.Column(db.String(20), unique=False, nullable=False)
+    information = db.Column(db.Text, unique=False, nullable=False)
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)

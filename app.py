@@ -212,7 +212,8 @@ def tutor_form():
             grade=request.form['grade'],
             time=request.form['time'],
             rate=request.form['rate'],
-            phoneNumber=user.phoneNumber
+            phoneNumber=user.phoneNumber,
+            information=request.form['information']
         )
         db.session.add(tutor_info)
         db.session.commit()
@@ -250,8 +251,6 @@ def review():
     return render_template('review.html')
 # ---------------------------------------------------发布家教内容-----------------------------------------------
 
-
-
 # ---------------------------------------------------发布学生需求-----------------------------------------------
 
 @app.route('/student-form', methods=['GET', 'POST'])
@@ -263,12 +262,13 @@ def student_form():
         user = User.query.get(user_id)
         student_request = StudentRequest(
             user_id = user_id,
-            name = request.form['name'],
+            name=g.user.username,
             subject = request.form['subject'],
             grade = request.form['grade'],
             time = request.form['time'],
             budget = request.form['budget'],
-            phoneNumber = user.phoneNumber
+            phoneNumber = user.phoneNumber,
+            information = request.form['information']
 
         )
         db.session.add(student_request)

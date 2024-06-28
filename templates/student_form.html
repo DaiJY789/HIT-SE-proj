@@ -1,43 +1,98 @@
 {% extends "base_student.html" %}
 {% block content %}
+<style>
+    .subject-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+    .subject-button {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px 20px;
+        margin: 10px;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: background-color 0.3s;
+    }
+    .subject-button img {
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+    }
+    .subject-button:hover, .subject-button.selected {
+        background-color: #C3DDF5;
+    }
+    .invalid-feedback {
+        display: none;
+        color: red;
+    }
+    .was-validated .invalid-feedback {
+        display: block;
+    }
+    .form-group {
+        margin-top: 40px;
+        margin-bottom: 40px; /* 增加表单元素之间的垂直距离 */
+    }
+</style>
     <h1 class="center-text">请填写您想要发布的需求</h1>
     <form method="POST" class="needs-validation" novalidate>
-        <div class="form-group">
-            <label for="name">姓名：</label>
-            <input type="text" id="name" name="name" class="form-control" required>
-            <div class="invalid-feedback">请输入姓名。</div>
-        </div>
 
-        <div class="form-group">
-            <label for="subject">科目：</label>
-            <select id="subject" name="subject" class="form-control" required>
-                <option value="">请选择科目</option>
-                <option value="语文">语文</option>
-                <option value="数学">数学</option>
-                <option value="英语">英语</option>
-                <option value="物理">物理</option>
-                <option value="化学">化学</option>
-                <option value="生物">生物</option>
-                <option value="历史">历史</option>
-                <option value="地理">地理</option>
-                <option value="政治">政治</option>
-                <option value="其他">其他</option>
-            </select>
-            <div class="invalid-feedback">请选择科目。</div>
-        </div>
-
-        <div class="form-group">
+                <div class="form-group">
             <label for="grade">年级：</label>
             <select id="grade" name="grade" class="form-control" required>
                 <option value="">请选择年级</option>
                 <option value="小学">小学</option>
                 <option value="初中">初中</option>
                 <option value="高中">高中</option>
-                <option value="大学">大学</option>
-                <option value="其他">其他</option>
             </select>
             <div class="invalid-feedback">请选择年级。</div>
         </div>
+
+        <label for="subject">科目：</label>
+        <div id="subject" class="subject-buttons">
+            <div class="subject-button" data-value="语文">
+                <img src="{{ url_for('static', filename='subjects/Chinese.png') }}" alt="语文">
+                <span>语文</span>
+            </div>
+            <div class="subject-button" data-value="数学">
+                <img src="{{ url_for('static', filename='subjects/math.png') }}" alt="数学">
+                <span>数学</span>
+            </div>
+            <div class="subject-button" data-value="英语">
+                <img src="{{ url_for('static', filename='subjects/english.png') }}" alt="英语">
+                <span>英语</span>
+            </div>
+            <div class="subject-button" data-value="物理">
+                <img src="{{ url_for('static', filename='subjects/physics.png') }}" alt="物理">
+                <span>物理</span>
+            </div>
+            <div class="subject-button" data-value="化学">
+                <img src="{{ url_for('static', filename='subjects/chemistry.png') }}" alt="化学">
+                <span>化学</span>
+            </div>
+            <div class="subject-button" data-value="生物">
+                <img src="{{ url_for('static', filename='subjects/biology.png') }}" alt="生物">
+                <span>生物</span>
+            </div>
+            <div class="subject-button" data-value="历史">
+                <img src="{{ url_for('static', filename='subjects/history.png') }}" alt="历史">
+                <span>历史</span>
+            </div>
+            <div class="subject-button" data-value="地理">
+                <img src="{{ url_for('static', filename='subjects/geography.png') }}" alt="地理">
+                <span>地理</span>
+            </div>
+        </div>
+        <input type="hidden" id="selected-subject" name="subject" required>
+        <div class="invalid-feedback">请选择科目。</div>
+
+
 
         <div class="form-group">
             <label for="time">期望时间：</label>
@@ -50,27 +105,43 @@
             <input type="text" id="budget" name="budget" class="form-control" required>
             <div class="invalid-feedback">请输入预算。</div>
         </div>
+                <div class="form-group">
+            <label for="information">补充说明：</label>
+            <textarea id="information" name="information" class="form-control" style="height: 200px;" placeholder="补充说明（非必填）" required></textarea>
+            <div class="invalid-feedback">请输入您的评价内容。</div>
+        </div>
         <div style="text-align: center;">
-        <button type="submit" class="btn btn-primary">提交</button>
+            <button type="submit" class="btn btn-primary">提交</button>
         </div>
     </form>
 
 <script>
-    // 在提交表单时进行验证
-    (function() {
-        'use strict';
-        window.addEventListener('load', function() {
-            var forms = document.getElementsByClassName('needs-validation');
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.subject-button');
+        const hiddenInput = document.getElementById('selected-subject');
+        const invalidFeedback = document.querySelector('.invalid-feedback');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                buttons.forEach(btn => btn.classList.remove('selected'));
+                this.classList.add('selected');
+                hiddenInput.value = this.getAttribute('data-value');
+                hiddenInput.setCustomValidity('');
+                invalidFeedback.style.display = 'none';
             });
-        }, false);
-    })();
+        });
+
+        // 在提交表单时进行验证
+        const form = document.querySelector('.needs-validation');
+        form.addEventListener('submit', function(event) {
+            if (hiddenInput.value === '') {
+                event.preventDefault();
+                event.stopPropagation();
+                hiddenInput.setCustomValidity('请选择科目');
+                invalidFeedback.style.display = 'block';
+            }
+            form.classList.add('was-validated');
+        });
+    });
 </script>
 {% endblock %}

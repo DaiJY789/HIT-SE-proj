@@ -24,6 +24,7 @@
                     <p class="card-text" style="text-align: center;">可以进行家教的时间：{{ tutor.time }}</p>
                     <p class="card-text" style="text-align: center;">收费标准：{{ tutor.rate }}元/小时</p>
                     <p class="card-text" style="text-align: center;">联系方式：{{ tutor.phoneNumber }}</p>
+                    <p class="card-text" style="text-align: center;">说明：{{ tutor.information }}</p>
                     <div class="text-center">
                         <a href="{{ url_for('tutor_profile', user_id=tutor.user_id) }}" class="btn btn-primary">查看家教个人信息</a>
                     </div>

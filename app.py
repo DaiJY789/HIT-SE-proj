@@ -63,6 +63,11 @@ def register():
             flash("用户名已存在，请选择另一个用户名")
             return redirect(url_for('register'))
 
+        used_phone = User.query.filter_by(phoneNumber=phoneNumber).first()
+        if used_phone:
+            flash("该手机号已被注册过，请选择新的手机号")
+            return redirect(url_for('register'))
+
         new_user = User(username=username, password=password, role=role, phoneNumber=phoneNumber)
         db.session.add(new_user)
         db.session.commit()
@@ -180,21 +185,6 @@ def edit_student_profile(user_id):
         user.username = request.form['username']
         user.phoneNumber = request.form['phoneNumber']
         user.location = request.form['location']
-        if 'photo' in request.files:
-            photo = request.files['photo']
-            if photo.filename != '':
-                filename = f"{user.id}.png"
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                photo.save(file_path)
-                with Image.open(file_path) as img:
-                    # 设置缩放的宽度和高度
-                    max_width = 150
-                    max_height = 200
-                    # 缩放图片，保持宽高比
-                    img.thumbnail((max_width, max_height))
-                    # 保存缩放后的图片
-                    img.save(file_path)
-                user.photo = filename
         db.session.commit()
         flash('信息已更新')
         return redirect(url_for('student_profile', user_id=user.id))
@@ -403,7 +393,7 @@ def match_tutors():
         for tutor in tutors:
             tutor_user = User.query.get(tutor.user_id)
             tutor_location = tutor_user.location
-            distance = cal_distance(student_location, tutor_location)
+            distance = cal_distance(tutor_location, student_location)
 
             tutor_info = {
                 'tutor': tutor,
@@ -501,8 +491,20 @@ def admin_students():
 def admin_reviews():
     if 'admin' not in session:
         return redirect(url_for('admin'))
+
     reviews = Review.query.all()
-    return render_template('admin_reviews.html', reviews=reviews)
+    review_data = []
+
+    for review in reviews:
+        tutor = User.query.get(review.tutor_id)
+        user = User.query.get(review.user_id)
+        review_data.append({
+            'review': review,
+            'tutor_name': tutor.username,
+            'user_name': user.username
+        })
+
+    return render_template('admin_reviews.html', reviews=review_data)
 
 
 @app.route('/admin/delete/<string:entity>/<int:id>')

@@ -61,12 +61,12 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title" style="text-align: center;">{{ tutor.name }}老师</h5>
-                    <p class="card-text" style="text-align: center;">家教学科：{{ tutor.subject }}</p>
-                    <p class="card-text" style="text-align: center;">家教年级：{{ tutor.grade }}</p>
-                    <p class="card-text" style="text-align: center;">可以进行家教的时间：{{ tutor.time }}</p>
-                    <p class="card-text" style="text-align: center;">收费标准：{{ tutor.rate }}元/小时</p>
-                    <p class="card-text" style="text-align: center;">联系方式：{{ tutor.phoneNumber }}</p>
-                    <p class="card-text" style="text-align: center;">说明：{{ tutor.information }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>家教学科: </strong>{{ tutor.subject }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>家教年级: </strong>{{ tutor.grade }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>可以进行家教的时间: </strong>{{ tutor.time }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>收费标准: </strong>{{ tutor.rate }}元/小时</p>
+                    <p class="card-text" style="text-align: center;"><strong>联系方式: </strong>{{ tutor.phoneNumber }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>说明: </strong>{{ tutor.information }}</p>
                     <div class="text-center">
                         <a href="{{ url_for('tutor_profile', user_id=tutor.user_id) }}" class="btn btn-primary">查看家教个人信息</a>
                     </div>

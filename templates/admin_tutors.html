@@ -5,6 +5,14 @@
         color: red;
         margin-bottom: 20px;
     }
+        .card {
+        background-color: #CCECFF; /* 浅蓝色填充 */
+        border: 3px solid #007BFF; /* 深蓝色边框 */
+        border-radius: 10px; /* 可选：添加圆角 */
+    }
+    .form-group {
+        margin-bottom: 20px; /* 增加表单元素之间的垂直距离 */
+    }
 </style>
 
 {% with messages = get_flashed_messages() %}
@@ -15,10 +23,25 @@
       {% endif %}
     {% endwith %}
 
-<h2>家教信息</h2>
-<ul>
-    {% for tutor in tutors %}
-    <li>{{ tutor.name }} - {{ tutor.subject }} - {{ tutor.grade }} <a href="{{ url_for('delete_entity', entity='tutor', id=tutor.id) }}">删除</a></li>
-    {% endfor %}
-</ul>
+<h2 style="text-align: center" class="custom-heading">当前平台中的家教信息</h2>
+
+
+    <div class="row">
+        {% for tutor in tutors %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{ tutor.name }}老师</h5>
+                    <p class="card-text" style="text-align: center;"><strong>学科: </strong>{{ tutor.subject }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>家教年级: </strong>{{ tutor.grade }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>可以进行家教的时间: </strong>{{ tutor.time }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>收费标准: </strong>{{ tutor.rate }}元/小时</p>
+                    <p class="card-text" style="text-align: center;"><strong>联系方式: </strong>{{ tutor.phoneNumber }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>说明: </strong>{{ tutor.information }}</p>
+                </div>
+                <a href="{{ url_for('delete_entity', entity='tutor', id=tutor.id) }}" class="btn btn-danger" onclick="return confirm('确定要删除此信息吗？');">删除</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

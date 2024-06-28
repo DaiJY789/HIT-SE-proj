@@ -59,7 +59,7 @@
 </style>
 
 <div class="profile-content">
-    <h1 class="center-text">您的个人主页</h1>
+    <h1 class="center-text">{{user.username}}同学的个人主页</h1>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
         <div class="error">
@@ -81,9 +81,9 @@
             <td>{{ user.location }}</td>
         </tr>
     </table>
-    {% if visitor.id == user.id %}
+    {% if visitor.id == user.id or visitor.role == admin %}
             <div style="text-align: center;">
-        <a href="{{ url_for('edit_tutor_profile', user_id=user.id) }}" class="edit-button">编辑信息</a>
+        <a href="{{ url_for('edit_student_profile', user_id=user.id) }}" class="edit-button">编辑信息</a>
         </div>
 
     {% endif %}

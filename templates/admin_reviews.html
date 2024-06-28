@@ -5,20 +5,55 @@
         color: red;
         margin-bottom: 20px;
     }
+    .reviews-section {
+        margin-top: 40px;
+    }
+    .review-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    .review-item h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+    }
+    .review-item p {
+        margin: 0;
+        font-size: 14px;
+    }
+    .review-item .delete-link {
+        float: right;
+        color: red;
+        text-decoration: none;
+        font-size: 12px;
+    }
+    .review-item .delete-link:hover {
+        text-decoration: underline;
+    }
 </style>
 
 {% with messages = get_flashed_messages() %}
-      {% if messages %}
+    {% if messages %}
         <div class="error">
-          {{ messages[0] }}
+            {{ messages[0] }}
         </div>
-      {% endif %}
-    {% endwith %}
+    {% endif %}
+{% endwith %}
 
-<h2>评价</h2>
-<ul>
-    {% for review in reviews %}
-    <li>{{ review.username }}: {{ review.review }} <a href="{{ url_for('delete_entity', entity='review', id=review.id) }}">删除</a></li>
-    {% endfor %}
-</ul>
+<div class="reviews-section">
+
+    <h2 style="text-align: center" class="custom-heading">当前平台中的评价</h2>
+    <ul>
+        {% for item in reviews %}
+        <li class="review-item">
+            <a href="{{ url_for('delete_entity', entity='review', id=item.review.id) }}" class="delete-link" onclick="return confirm('确定要删除此评价吗？');">删除</a>
+            <h4><strong>{{ item.user_name }}</strong> 同学对 <strong>{{ item.tutor_name }}</strong> 老师的评价:</h4>
+            <p>{{ item.review.review }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
+

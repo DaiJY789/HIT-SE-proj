@@ -1,24 +1,116 @@
 {% extends "base_admin.html" %}
 {% block content %}
 <style>
+    .profile-content {
+        width: 80%;
+        max-width: 1000px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+    }
+    .profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .profile-photo {
+        width: 150px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .profile-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .profile-table th, .profile-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    .profile-table th {
+        background-color: #f4f4f4;
+    }
+    .edit-button {
+        margin-top: 20px;
+        display: inline-block;
+        padding: 10px 20px;
+        color: white;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .edit-button:hover {
+        background-color: #0056b3;
+    }
     .error {
         color: red;
         margin-bottom: 20px;
     }
+    .reviews-section {
+        margin-top: 40px;
+    }
+    .review-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    .review-item h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+    }
+    .review-item p {
+        margin: 0;
+        font-size: 14px;
+    }
+    .center-text {
+        text-align: center;
+    }
 </style>
 
 {% with messages = get_flashed_messages() %}
-      {% if messages %}
+    {% if messages %}
         <div class="error">
-          {{ messages[0] }}
+            {{ messages[0] }}
         </div>
-      {% endif %}
-    {% endwith %}
+    {% endif %}
+{% endwith %}
 
-<h2>用户列表</h2>
-<ul>
-    {% for user in users %}
-    <li>{{ user.username }} - {{ user.role }} <a href="{{ url_for('delete_entity', entity='user', id=user.id) }}">删除</a></li>
-    {% endfor %}
-</ul>
+<div class="profile-content">
+    <h2 class="center-text">当前平台中的用户列表如下</h2>
+    <table class="profile-table">
+        <thead>
+            <tr>
+                <th>用户名</th>
+                <th>电话号码</th>
+                <th>居住地址</th>
+                <th>用户类型</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td>{{ user.location }}</td>
+                 {% if user.role == 'tutor' %}
+                <td>家教</td>
+                {% else %}
+                <td>学生</td>
+                {% endif %}
+
+                <td><a href="{{ url_for('delete_entity', entity='user', id=user.id) }}" onclick="return confirm('确定要删除此用户吗？');">删除</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

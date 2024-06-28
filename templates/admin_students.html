@@ -5,6 +5,21 @@
         color: red;
         margin-bottom: 20px;
     }
+
+    .card {
+        background-color: #CCECFF; /* 浅蓝色填充 */
+        border: 3px solid #007BFF; /* 深蓝色边框 */
+        border-radius: 10px; /* 可选：添加圆角 */
+    }
+    .form-group {
+        margin-bottom: 20px; /* 增加表单元素之间的垂直距离 */
+    }
+        .custom-heading {
+        text-align: center;
+        margin-top: 20px; /* 上方距离 */
+        margin-bottom: 40px; /* 下方距离 */
+    }
+
 </style>
 
 {% with messages = get_flashed_messages() %}
@@ -15,10 +30,23 @@
       {% endif %}
     {% endwith %}
 
-<h2>学生需求</h2>
-<ul>
-    {% for student in students %}
-    <li>{{ student.name }} - {{ student.subject }} - {{ student.grade }} <a href="{{ url_for('delete_entity', entity='student', id=student.id) }}">删除</a></li>
-    {% endfor %}
-</ul>
+<h2 style="text-align: center" class="custom-heading">当前平台中的学生需求</h2>
+    <div class="row">
+        {% for student in students %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center;">{{ student.name }}同学</h5>
+                    <p class="card-text" style="text-align: center;"><strong>学科: </strong> {{ student.subject }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>年级: </strong>{{ student.grade }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>期望时间: </strong>{{ student.time }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>预算:</strong> {{ student.budget }}元/小时</p>
+                    <p class="card-text" style="text-align: center;"><strong>联系方式: </strong>{{ student.phoneNumber }}</p>
+                    <p class="card-text" style="text-align: center;"><strong>说明: </strong>{{ student.information }}</p>
+                </div>
+                <a href="{{ url_for('delete_entity', entity='student', id=student.id) }}" class="btn btn-danger" onclick="return confirm('确定要删除此信息吗？');">删除</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

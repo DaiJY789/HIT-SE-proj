@@ -207,12 +207,12 @@ def tutor_form():
         user = User.query.get(user_id)
         tutor_info = TutorInfo(
             user_id=g.user.id,
-            name=request.form['name'],
+            name=g.user.username,
             subject=request.form['subject'],
             grade=request.form['grade'],
             time=request.form['time'],
             rate=request.form['rate'],
-            phoneNumber = user.phoneNumber
+            phoneNumber=user.phoneNumber
         )
         db.session.add(tutor_info)
         db.session.commit()

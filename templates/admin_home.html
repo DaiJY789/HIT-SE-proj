@@ -1,10 +1,70 @@
 {% extends "base_admin.html" %}
 
-
 {% block content %}
+<style>
+    .centered-content {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .centered-content h1 {
+        margin-bottom: 10px;
+    }
+    .centered-content h2 {
+        margin-bottom: 20px;
+    }
+    .centered-content p {
+        margin-bottom: 10px;
+    }
+    .feature-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+    .feature-item {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 45%;
+        margin: 20px 0;
+        text-align: center;
+    }
+    .feature-item img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+</style>
+
 <div class="centered-content">
     <h1>您好！管理员</h1>
-    <h1>请在左侧选择您的操作</h1>
+    <h2>欢迎使用在线家教服务平台</h2>
+    <p>请在左侧选择您的操作，下面是一些功能的介绍：</p>
+</div>
+
+<div class="feature-section">
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/users.png') }}" alt="用户管理">
+        <h3>用户管理</h3>
+        <p>管理平台上的所有用户，包括老师和学生</p>
+    </div>
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/tutor_info.png') }}" alt="家教信息管理">
+        <h3>家教信息管理</h3>
+        <p>管理平台上发布的所有家教信息，确保内容合法和合规</p>
+    </div>
+        <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/student_needs.png') }}" alt="学生需求管理">
+        <h3>学生需求管理</h3>
+        <p>管理平台上发布的所有学生需求，确保内容合法和合规</p>
+    </div>
+        <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/reviews.png') }}" alt="评价信息管理">
+        <h3>学生评价管理</h3>
+        <p>管理平台上所有的学生评价，确保内容的合法和合规</p>
+    </div>
+
 </div>
 {% endblock %}
 

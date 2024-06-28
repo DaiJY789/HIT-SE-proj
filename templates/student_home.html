@@ -1,10 +1,77 @@
 {% extends "base_student.html" %}
 
-{% block title %}Admin Page{% endblock %}
-
 {% block content %}
+<style>
+    .centered-content {
+        text-align: center;
+        margin-top: 10px;
+    }
+    .centered-content h1 {
+        margin-bottom: 10px;
+    }
+    .centered-content h2 {
+        margin-bottom: 20px;
+    }
+    .feature-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+    .feature-item {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 45%;
+        margin: 20px 0;
+        text-align: center;
+    }
+    .feature-item img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+</style>
+
 <div class="centered-content">
     <h1>您好！同学</h1>
-    <h1>请在左侧选择您的操作</h1>
+    <h2>欢迎使用在线家教服务平台</h2>
+    <p>请在左侧选择您的操作，下面是一些功能的介绍：</p>
+</div>
+
+<div class="feature-section">
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/personal_center.png') }}" alt="个人中心">
+        <h3>个人中心</h3>
+        <p>查看并编辑您的个人信息</p>
+    </div>
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/tutor_info.png') }}" alt="发布学习需求">
+        <h3>发布学习需求</h3>
+        <p>发布您的学习需求，让老师找到您并提供帮助</p>
+
+    </div>
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/student_needs.png') }}" alt="查找家教信息">
+        <h3>查找家教信息</h3>
+        <p>浏览平台上的家教信息，找到适合您的老师</p>
+    </div>
+    <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/system_recommendations.png') }}" alt="查看系统推荐">
+        <h3>查看系统推荐</h3>
+        <p>系统的推荐算法，将为您找到合适的老师</p>
+    </div>
+        <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/reviews.png') }}" alt="进行家教评价">
+        <h3>进行家教评价</h3>
+        <p>对老师满意/不满意？对TA进行评价吧！</p>
+    </div>
+            <div class="feature-item">
+        <img src="{{ url_for('static', filename='figures/feedback.png') }}" alt="向管理员反馈">
+        <p>使用平台时遇到了问题？向管理员反馈吧！</p>
+        <p>管理员的e-mail: 2395055466@qq.com</p>
+    </div>
+
 </div>
 {% endblock %}

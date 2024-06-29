@@ -6,8 +6,8 @@
         <ul class="list-group">
             {% for tutor_info in tutor_infos %}
                 <li class="list-group-item">
-                    <h5>{{ tutor_info.subject }} - {{ tutor_info.grade }}</h5>
-                    <p>时间：{{ tutor_info.time }}</p>
+                    <p>科目：{{ tutor_info.subject }}</p>
+                    <p>家教年级：{{ tutor_info.grade }}</p>
                     <p>收费标准：{{ tutor_info.rate }}元/小时</p>
                     <p>说明：{{ tutor_info.information }}</p>
                     <form action="{{ url_for('delete_tutor_info', tutor_info_id=tutor_info.id) }}" method="post" style="display: inline;">

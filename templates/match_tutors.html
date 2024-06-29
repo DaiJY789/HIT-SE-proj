@@ -45,11 +45,10 @@
                     <h5 class="card-title" style="text-align: center;">{{ item.tutor.name }}老师</h5>
                     <p class="card-text" style="text-align: center;">家教学科：{{ item.tutor.subject }}</p>
                     <p class="card-text" style="text-align: center;">家教年级：{{ item.tutor.grade }}</p>
-                    <p class="card-text" style="text-align: center;">可以进行家教的时间：{{ item.tutor.time }}</p>
                     <p class="card-text" style="text-align: center;">收费标准：{{ item.tutor.rate }}元/小时</p>
                     <p class="card-text" style="text-align: center;">联系方式：{{ item.tutor.phoneNumber }}</p>
                     <p class="card-text" style="text-align: center;">说明：{{ item.tutor.information }}</p>
-                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 公里</p>
+                    <p class="card-text" style="text-align: center;">距离：<strong>{{ item.distance }}</strong> 公里</p>
                     <div class="text-center">
                         <a href="{{ url_for('tutor_profile', user_id=item.tutor.user_id) }}" class="btn btn-primary">查看家教个人信息</a>
                     </div>

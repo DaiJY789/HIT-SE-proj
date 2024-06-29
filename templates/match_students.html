@@ -42,14 +42,13 @@
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title" style="text-align: center;">{{ item.student_request.name }}学生</h5>
+                    <h5 class="card-title" style="text-align: center;">{{ item.student_request.name }}同学</h5>
                     <p class="card-text" style="text-align: center;">所需家教学科：{{ item.student_request.subject }}</p>
                     <p class="card-text" style="text-align: center;">所需家教年级：{{ item.student_request.grade }}</p>
-                    <p class="card-text" style="text-align: center;">家教时间需求：{{ item.student_request.time }}</p>
                     <p class="card-text" style="text-align: center;">预算：{{ item.student_request.budget }}元/小时</p>
                     <p class="card-text" style="text-align: center;">联系方式：{{ item.student_request.phoneNumber }}</p>
                     <p class="card-text" style="text-align: center;">说明：{{ item.student_request.information }}</p>
-                    <p class="card-text" style="text-align: center;">距离：{{ item.distance }} 公里</p>
+                    <p class="card-text" style="text-align: center;">距离您：<strong>{{ item.distance }}</strong> 公里</p>
                     <div class="text-center">
                         <a href="{{ url_for('student_profile', user_id=item.student_request.user_id) }}" class="btn btn-primary">查看学生个人信息</a>
                     </div>

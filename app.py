@@ -189,6 +189,8 @@ def edit_student_profile(user_id):
         flash('信息已更新')
         return redirect(url_for('student_profile', user_id=user.id))
     return render_template('edit_student_profile.html', user=user)
+
+
 # -------------------------2发布家教信息-------------------------
 @app.route('/tutor-form', methods=['GET', 'POST'])
 def tutor_form():
@@ -202,7 +204,6 @@ def tutor_form():
             name=g.user.username,
             subject=request.form['subject'],
             grade=request.form['grade'],
-            time=request.form['time'],
             rate=request.form['rate'],
             phoneNumber=user.phoneNumber,
             information=request.form['information']
@@ -211,11 +212,9 @@ def tutor_form():
         db.session.commit()
         return redirect(url_for('tutors'))
     return render_template('tutor_form.html')
-# -------------------------3查看家教信息-------------------------
 
 
-# -----------------------4管理我的家教信息------------------------
-
+# -----------------------管理我的家教信息------------------------
 @app.route('/manage_tutor_info')
 def manage_tutor_info():
     tutor_infos = TutorInfo.query.filter_by(user_id=g.user.id).all()
@@ -246,13 +245,7 @@ def delete_student_request(request_id):
         return redirect(url_for('manage_student_requests'))
     db.session.delete(request)
     db.session.commit()
-    flash('家教需求已删除。', 'success')
     return redirect(url_for('manage_student_requests'))
-
-# -------------------------5查看学生需求-------------------------
-# -------------------------6查看系统推荐-------------------------
-# -------------------------7查看我的评价-------------------------
-# ---------------------------8回到首页--------------------------完成
 
 
 # ---------------------------------------------------学生操作--------------------------------------------------
@@ -293,7 +286,6 @@ def student_form():
             name=g.user.username,
             subject = request.form['subject'],
             grade = request.form['grade'],
-            time = request.form['time'],
             budget = request.form['budget'],
             phoneNumber = user.phoneNumber,
             information = request.form['information']
@@ -371,7 +363,6 @@ def students():
 
 
 
-# ---------------------------------------------------查看家教信息-----------------------------------------------
 
 
 # ---------------------------------------------------系统推荐-----------------------------------------------
@@ -439,6 +430,8 @@ def match_tutors():
             }
             matched_tutors.append(tutor_info)
 
+    matched_tutors.sort(key=lambda x: x['distance'])  # 按照距离排序
+
     return render_template('match_tutors.html', matched_tutors=matched_tutors)
 
 
@@ -471,7 +464,7 @@ def match_students():
             'distance': distance
         }
         matched_students.append(student_info)
-
+    matched_students.sort(key=lambda x: x['distance'])  # 按照距离排序
     return render_template('match_students.html', matched_students=matched_students)
 
 

@@ -4,13 +4,13 @@ This project is a web-based platform where students can post and search for home
 
 ## Features
 
-- **Information Registration**: Both tutors and students can register their personal information.
-- **Posting Information**:
-  - Tutors can post their profiles, including subjects, grades, and available times.
-  - Students can post their tutoring needs.
-- **Matching System**: The platform recommends and matches tutors and students.
-- **Information Query**: Users can search for tutors or students based on specific criteria.
-- **Evaluation System**: Users can leave feedback and rate each other.
+- **Information Registration**: Register personal information for both tutors and students.
+- **Tutor Information Posting**: Tutors can post details about themselves, including subjects they are proficient in, their grade levels, and available times.
+- **Student Information Posting**: Students can post their tutoring requirements.
+- **Matching System**: Recommendations and matches between tutors and students based on their needs.
+- **Information Query**: Allows users to search for tutors or students based on specific criteria.
+- **Evaluation System**: Users can evaluate and leave feedback for each other.
+- **Administrator mode**: Manages all relevant information in this site.
 
 ## Getting Started
 

@@ -1,10 +1,56 @@
-# HIT-SE-proj
-Home-teaching service system
+# HIT-SE-proj: Home-Teaching Service System
 
-target:
-学生可在网络上发布从事家教信息，有家教需求的也可找寻到家教
-* 信息注册:家教和学生的个人信息
-* 家教信息发布:发布家教的个人情况，擅长的科目、年级、时间等 – 学生信息发布:家教需求
-* “家教-学生”推荐、匹配
-* 信息查询
-* 评价
+This project is a web-based platform where students can post and search for home-teaching opportunities.
+
+## Features
+
+- **Information Registration**: Both tutors and students can register their personal information.
+- **Posting Information**:
+  - Tutors can post their profiles, including subjects, grades, and available times.
+  - Students can post their tutoring needs.
+- **Matching System**: The platform recommends and matches tutors and students.
+- **Information Query**: Users can search for tutors or students based on specific criteria.
+- **Evaluation System**: Users can leave feedback and rate each other.
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.x
+- Flask
+
+### Installation
+
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/Dai-JY/HIT-SE-proj.git
+    ```
+2. Navigate to the project directory:
+    ```sh
+    cd HIT-SE-proj
+    ```
+3. Install the required packages:
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+### Running the Application
+
+1. Set the FLASK_APP environment variable:
+    ```sh
+    export FLASK_APP=app.py
+    ```
+2. Run the Flask application:
+    ```sh
+    flask run
+    ```
+3. Open your browser and navigate to `http://127.0.0.1:5000/`.
+
+## Folder Structure
+
+- `app.py`: The main application file.
+- `models.py`: Database models.
+- `static/`: Static files (CSS, JavaScript, images).
+- `templates/`: HTML templates.
+- `instance/`: Configuration files.
+- `__pycache__/`: Compiled Python files.
